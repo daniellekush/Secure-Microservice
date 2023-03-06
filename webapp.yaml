@@ -17,6 +17,13 @@ spec:
       containers:
       - name: web-app
         image: nanajanashia/k8s-demo-app:v1.0
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "100Mi"
+          limits:
+            cpu: "300m"
+            memory: "170Mi"
         ports:
         - containerPort: 3000
         env:
