@@ -14,6 +14,11 @@ spec:
       labels:
         app: web-app
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
       containers:
       - name: web-app
         image: nanajanashia/k8s-demo-app:v1.0
@@ -42,6 +47,9 @@ spec:
             configMapKeyRef:
               name: mongo-config
               key: mongo-url
+        securityContext:
+          runAsUser: 10000
+          readOnlyRootFilesystem: true
 ---
 apiVersion: v1
 kind: Service

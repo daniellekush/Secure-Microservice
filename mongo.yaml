@@ -14,9 +14,21 @@ spec:
       labels:
         app: mongo
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
       containers:
       - name: mongodb
         image: mongo:6.0.4
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "100Mi"
+          limits:
+            cpu: "300m"
+            memory: "170Mi"
         ports:
         - containerPort: 27017
         env:
@@ -30,6 +42,9 @@ spec:
             secretKeyRef:
               name: mongo-secret
               key: mongo-pass
+        securityContext:
+          runAsUser: 10000
+          readOnlyRootFilesystem: true
 ---
 apiVersion: v1
 kind: Service
