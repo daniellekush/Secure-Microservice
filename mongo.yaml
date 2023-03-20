@@ -14,14 +14,9 @@ spec:
       labels:
         app: mongo
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 3000
-        fsGroup: 2000
       containers:
       - name: mongodb
-        image: mongo:6.0.4
+        image: mongo:latest
         resources:
           requests:
             cpu: "200m"
@@ -42,9 +37,6 @@ spec:
             secretKeyRef:
               name: mongo-secret
               key: mongo-pass
-        securityContext:
-          runAsUser: 10000
-          readOnlyRootFilesystem: true
 ---
 apiVersion: v1
 kind: Service
