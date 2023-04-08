@@ -1,3 +1,5 @@
+# Configuration for the basic web application deployment
+# Reference: TechWorld with Nana, 2022 (https://www.youtube.com/watch?v=oBf5lrmquYI)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,6 +16,7 @@ spec:
       labels:
         app: web-app
     spec:
+# Security restrictions
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -22,6 +25,7 @@ spec:
       containers:
       - name: web-app
         image: nanajanashia/k8s-demo-app:v1.0
+# Resource restrictions
         resources:
           requests:
             cpu: "200m"
@@ -47,10 +51,12 @@ spec:
             configMapKeyRef:
               name: mongo-config
               key: mongo-url
+# Further security restrictions
         securityContext:
           runAsUser: 10000
           readOnlyRootFilesystem: true
 ---
+# Configuration for the web application service
 apiVersion: v1
 kind: Service
 metadata:

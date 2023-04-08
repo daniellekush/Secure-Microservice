@@ -1,9 +1,12 @@
+# Network policy configuration from Sprint 9
+# Reference: Jain, 2020 (https://k21academy.com/docker-kubernetes/network-policies-in-kubernetes/)
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: default-policy
 spec:
   podSelector: {}
+# Turns off ingress and egress communication between pods in the cluster
   policyTypes:
   - Ingress
   - Egress

@@ -1,3 +1,5 @@
+# MongoDB deployment configuration
+# Reference: TechWorld with Nana, 2022 (https://www.youtube.com/watch?v=oBf5lrmquYI)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -38,6 +40,7 @@ spec:
               name: mongo-secret
               key: mongo-pass
 ---
+# MongoDB service configuration
 apiVersion: v1
 kind: Service
 metadata:

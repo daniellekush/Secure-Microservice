@@ -1,3 +1,5 @@
+# Manifest for the ConfigMap used by the MongoDB deployment
+# Reference: TechWorld with Nana, 2022 (https://www.youtube.com/watch?v=oBf5lrmquYI)
 apiVersion: v1
 kind: ConfigMap
 metadata:

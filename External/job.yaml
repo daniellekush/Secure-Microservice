@@ -1,3 +1,5 @@
+# kube-bench configuration
+# Reference: Aqua Security, c2023 (https://www.github.com/aquasecurity/kube-bench)
 ---
 apiVersion: batch/v1
 kind: Job
