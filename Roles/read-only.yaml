@@ -4,7 +4,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: read-only
-  namespace: kube-system
+  namespace: default
 rules:
 - apiGroups: [""]
   resources: ["*"]
@@ -21,9 +21,9 @@ roleRef:
   kind: Role
   name: read-only
   apiGroup: rbac.authorization.k8s.io
-# Assign to the default service account in the kube-system namespace
+# Assign to the default service account in the default namespace
 # Can assign multiple subjects, so can add other users/groups/service accounts who require read-only permissions
 subjects:
 - kind: ServiceAccount
   name: default
-  namespace: kube-system
+  namespace: default
