@@ -24,6 +24,6 @@ roleRef:
 # Assign to the default service account in the default namespace
 # Can assign multiple subjects, so can add other users/groups/service accounts who require read-only permissions
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: default
+- kind: Group
+  name: system:serviceaccounts
+  apiGroup: rbac.authorization.k8s.io
