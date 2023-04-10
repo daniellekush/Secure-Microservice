@@ -1,0 +1,29 @@
+# RBAC configuration for read-only role in the default namespace (where the main application is located)
+# Reference: Magnusson, c2023 (https://strongdm.com/blog/kubernetes-rbac-role-based-access-control), The Kubernetes Authors, c2023 (https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: read-only
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  verbs: ["get", "list", "watch"]
+---
+# RBAC configuration for binding an RBAC role to a service account
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-only-binding
+  namespace: default
+# Bind the read-only role
+roleRef:
+  kind: Role
+  name: read-only
+  apiGroup: rbac.authorization.k8s.io
+# Assign to the default service account in the kube-system namespace
+# Can assign multiple subjects, so can add other users/groups/service accounts who require read-only permissions
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: kube-system

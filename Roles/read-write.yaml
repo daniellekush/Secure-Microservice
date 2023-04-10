@@ -1,0 +1,28 @@
+# RBAC configuration for read-write role in the default namespace to allow (most likely developers) to edit the application
+# Reference: Magnusson, c2023 (https://strongdm.com/blog/kubernetes-rbac-role-based-access-control), The Kubernetes Authors, c2023 (https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: read-write
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+# RBAC configuration for binding the read-write role to a service account
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-write-binding
+  namespace: default
+# Bind the read-write role
+roleRef:
+  kind: Role
+  name: read-write
+  apiGroup: rbac.authorization.k8s.io
+# Assign to the developer service account
+subjects:
+- kind: ServiceAccount
+  name: dev
+  namespace: default

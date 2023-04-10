@@ -1,0 +1,5 @@
+# Configuration to create a Developer service account that received the read-write role in the read-write.yaml file
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dev

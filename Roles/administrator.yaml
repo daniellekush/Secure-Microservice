@@ -1,0 +1,26 @@
+# RBAC configuration for an administrator role, giving them privileged access to the entire cluster
+# Reference: Magnusson, c2023 (https://strongdm.com/blog/kubernetes-rbac-role-based-access-control), The Kubernetes Authors, c2023 (https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: admin
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+# RBAC configuration for binding the admin role to users in the admins group
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-binding
+# Bind the admin role
+roleRef:
+  kind: ClusterRole
+  name: admin
+  apiGroup: rbac.authorization.k8s.io
+# Assign to group called admins
+subjects:
+- kind: Group
+  name: admins
+  apiGroup: rbac.authorization.k8s.io
