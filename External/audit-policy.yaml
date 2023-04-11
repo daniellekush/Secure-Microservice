@@ -1,0 +1,64 @@
+# Configuration file for creating audit logs from actions occurring in the cluster.
+# Reference: Olaogun, 2023 (https://www.containiq.com/post/kubernetes-audit-logs)
+apiVersion: audit.k8s.io/v1
+kind: Policy
+
+# Prevent requests in the RequestReceived stage from generating audit events.
+omitStages:
+  - "RequestReceived"
+
+rules:
+  # Log pod changes at the RequestResponse level.
+  - level: RequestResponse
+    resources:
+    - group: ""
+      resources: ["pods"]
+  # Log "pods/log" and "pods/status" at the Metadata level.
+  - level: Metadata
+    resources:
+    - group: ""
+      resources: ["pods/log", "pods/status"]
+  # Exclude logging requests to a configmap called "controller-config".
+  - level: None
+    resources:
+    - group: ""
+      resources: ["configmaps"]
+      resourceNames: ["controller-config"]
+  # Exclude logging watch requests by the "system:kube-proxy" on endpoints or services.
+  - level: None
+    users: ["system:kube-proxy"]
+    verbs: ["watch"]
+    resources:
+    - group: ""
+      resources: ["endpoints", "services"]
+  # Log deployment changes at the RequestResponse level.
+  - level: RequestResponse
+    resources:
+    - group: ""
+      resources: ["deployments"]
+  # Log service changes at the Metadata level.
+  - level: Metadata
+    resources:
+    - group: ""
+      resources: ["services"]
+  # Log the request body of configmap changes in the kube-system namespace.
+  - level: Request
+    resources:
+    - group: ""
+      resources: ["configmaps"]
+    namespaces: ["kube-system"]
+  # Log configmap and secret changes in all other namespaces at the Metadata level.
+  - level: Metadata
+    resources:
+    - group: ""
+      resources: ["secrets", "configmaps"]
+  # Log all other resources in core and extensions at the Request level.
+  - level: Request
+    resources:
+    - group: ""
+    - group: "extensions"
+  # Log all other requests at the Metadata level.
+  - level: Metadata
+    omitStages:
+      - "RequestReceived"
+
