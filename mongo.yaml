@@ -16,6 +16,11 @@ spec:
       labels:
         app: mongo
     spec:
+      securityContext:
+          capabilities:
+            drop:
+              - NET_RAW
+              - CAP_NET_RAW
       automountServiceAccountToken: false
       serviceAccountName: dev
       containers:

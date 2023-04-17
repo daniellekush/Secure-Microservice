@@ -22,6 +22,10 @@ spec:
         runAsUser: 1000
         runAsGroup: 3000
         fsGroup: 2000
+        capabilities:
+            drop:
+              - NET_RAW
+              - CAP_NET_RAW
       automountServiceAccountToken: false
       serviceAccountName: dev
       containers:
